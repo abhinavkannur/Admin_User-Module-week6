@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Home</title>
+</head>
+<body>
+    <h2>Welcome to the Home Page</h2>
+    <p>Welcome, <%= req.session.userId %>!</p>
+    <a href="/auth/logout">Logout</a>
+</body>
+</html>
