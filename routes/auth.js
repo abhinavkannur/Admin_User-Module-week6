@@ -26,31 +26,40 @@ router.get('/login',(req,res)=>{
 
 //handle login page
 
-router.post('/login',async(req,res)=>{
-  const {email,password}=req.body
-  const user=await User.findOne({email});
-  if(user && await bcrypt.compare(password,user.password)){
-    req.session.userId =user._id;
-    req.session.role=user.role;
-    res.redirect('/home');
-  }
-  else{
-    res.render('login',{error:'invalid credentials'})
-  }
-})
-
-//homepage
-router.get('/home',(req,res)=>{
-  if(req.session.userId){
-    res.render('home')
-  }
-  else{
-    res.redirect('/auth/login');
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (user && await bcrypt.compare(password, user.password)) {
+    req.session.userId = user._id;
+    req.session.role = user.role;
+    console.log("Session userId set:", req.session.userId);
+    res.redirect('/auth/home');
+  } else {
+    res.render('login', { error: 'invalid credentials' });
   }
 });
-router.get('logout',(req,res)=>{
+
+//homepage
+router.get('/home', async (req, res) => {
+  if (req.session.userId) {
+    try {
+      const user = await User.findById(req.session.userId);
+      if (user) {
+        res.render('home', { userName: user.name });  // Pass the user's name to the template
+      } else {
+        res.redirect('/auth/login');
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      res.redirect('/auth/login');
+    }
+  } else {
+    res.redirect('/auth/login');
+  }
+});;
+router.get('/logout',(req,res)=>{
   req.session.destroy(err=>{
-    if(err) return res.status(500).send('error logging out')
+    if(err) return res.status(500).send('error in logging out')
       res.redirect('/auth/login')
   })
 })

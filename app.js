@@ -6,24 +6,38 @@ const bcrypt=require('bcryptjs');
 const session=require('express-session');
 const app=express();
 const path=require('path');
-const cookieParser=require('cookie-parser')
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 //middleware set up
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
-app.use(cookieParser());
-app.use(session({
-  secret:'secret-key',
-  resave:false,
-  saveUninitialized:true
-}))
 
 
-
-//db connection
+///db connection
 mongoose.connect('mongodb://localhost:27017/week')
-.then(()=>console.log('db connected'))
-.catch((err)=>console.log('db connection error',err))
+
+.then(() => console.log('Connected to MongoDB'))
+.catch((err) => console.log('MongoDB connection error:', err));
+
+// Session store in MongoDB
+const store = new MongoDBStore({
+  uri: 'mongodb://localhost:27017/week',
+  collection: 'sessions'
+});
+
+
+// app.use(cookieParser());
+
+app.use(session({
+  secret: 'secret-key',
+  resave: false,
+  saveUninitialized: false,
+  store: store,
+  cookie: { secure: false }
+}));
+
+
+
 
 
 //seting templates enginee and static files

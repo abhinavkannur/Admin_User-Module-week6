@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="..//css/style.css">
     <title>Home</title>
 </head>
 <body>
-    <h2>Welcome to the Home Page</h2>
-    <p>Welcome, <%= req.session.userId %>!</p>
-    <a href="/auth/logout">Logout</a>
+    <div class="container">
+        <div class="card">
+            <h2 class="home-heading">Welcome to the Home Page</h2> 
+            <p class="welcome-message">Hello, <span class="user-name"><%= userName %></span>!</p>
+            <button class="btn-logout" onclick="window.location.href='/auth/logout'">Logout</button>
+        </div>
+    </div>
 </body>
 </html>

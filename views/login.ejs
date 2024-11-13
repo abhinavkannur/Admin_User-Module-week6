@@ -1,3 +1,21 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Login</title>
+</head>
+<body>
+
+    <form action="/auth/login" method="POST">
+        <h2 class="head2">Login</h2>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+        <a class="anc" href="/auth/signup">Don't have an account? Signup</a>
+    </form>
+   
+</body>
+</html> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +23,14 @@
     <title>Login</title>
 </head>
 <body>
-    <h2>Login</h2>
-    <form action="/auth/login" method="POST">
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Login</button>
-    </form>
-    <a href="/auth/signup">Don't have an account? Signup</a>
+    <div class="container">
+        <form class="login-form" action="/auth/login" method="POST">
+            <h2 class="form-heading">Login</h2>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="btn-submit">Login</button>
+            <p class="form-text">Don't have an account? <a href="/auth/signup">Signup here</a></p>
+        </form>
+    </div>
 </body>
 </html>
